@@ -17,6 +17,8 @@ namespace MacroTool
         protected Point MousePt;  // 紀錄移動前和移動後的滑鼠座標
         protected bool canMove = false;         // 紀錄表單可否被拖曳
         protected int LeftVar = 0, TopVar = 0;  // 紀錄form的移動量
+        string macroName = "";
+        string index = "";
         public Form1()
         {
             InitializeComponent();
@@ -53,6 +55,9 @@ namespace MacroTool
         {
             OpenFileDialog openFileDialog1;
             StreamReader myStream = null;
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
             List<Command> cmds = new List<Command>();
             try
             {
@@ -64,9 +69,12 @@ namespace MacroTool
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     string line = string.Empty;
-                    string[] info = ShowInfoDialog();
-                    string macroName = info[0];
-                    string index = info[1];
+                    if (macroName.Equals("") || index.Equals(""))
+                    {
+                        string[] info = ShowInfoDialog();
+                        macroName = info[0];
+                        index = info[1];
+                    }
                     using (myStream = new StreamReader(openFileDialog1.FileName))
                     {
                         fileName_lb.Text = openFileDialog1.FileName;
